@@ -1,11 +1,12 @@
 'use strict';
 const Alexa = require('alexa-sdk');
-
+const languageStrings = require('./language');
 const APP_ID = "amzn1.ask.skill.ed110c90-9b28-4c38-9893-4abc77f702dd";
 const SKILL_NAME = 'policy assistant';
 const HELP_MESSAGE = 'You can ask a question like, what is my claim status.';
 const HELP_REPROMPT = 'What can I help you with?';
 const STOP_MESSAGE = 'Goodbye!';
+
 
 const handlers = {
     'LaunchRequest': function () {
@@ -40,7 +41,7 @@ const handlers = {
         } else {
             speechOutput = "Please provide the claim number.";
         }
-        this.response.speak(speechOutput).listen(repromptSpeech).shouldEndSession(false);
+        this.response.speak(speechOutput).shouldEndSession(false);
         this.emit(':responseReady');
     },
     "GetRepairPaymentStatusIntent": function () {
@@ -55,7 +56,7 @@ const handlers = {
         } else {
             speechOutput = "Please provide the claim number.";
         }
-        this.response.speak(speechOutput).listen(repromptSpeech).shouldEndSession(false);
+        this.response.speak(speechOutput).shouldEndSession(false);
         this.emit(':responseReady');
     }
 };
@@ -63,6 +64,7 @@ const handlers = {
 exports.handler = function (event, context, callback) {
     const alexa = Alexa.handler(event, context, callback);
     alexa.APP_ID = APP_ID;
+    //alexa.resources = languageStrings;
     alexa.registerHandlers(handlers);
     alexa.execute();
 };
