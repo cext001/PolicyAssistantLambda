@@ -1,18 +1,18 @@
 module.exports = {
     'en-US': {
         'translation': {
-            'HELLO_MESSAGE': 'Welcome to the policy assistant.',
-            'HELP_MESSAGE': 'You can ask a question like, what is my claim status.',
-            'HELP_REPROMPT': 'What can I help you with?',
-            'STOP_MESSAGE': 'Happy to help you. Goodbye!'
+            'HELLO_MESSAGE': '<s>Welcome to the policy assistant.</s>',
+            'HELP_MESSAGE': '<s>You can ask a question like, what is my claim status.</s>',
+            'HELP_REPROMPT': '<s>What can I help you with?</s>',
+            'STOP_MESSAGE': '<s>Happy to help you. Goodbye!</s>'
         }
     },
     'de-DE': {
         'translation': {
-            'HELLO_MESSAGE': 'Willkommen beim Politikassistenten.',
-            'HELP_MESSAGE': 'Sie können eine Frage stellen, was ist mein Anspruchsstatus.',
-            'HELP_REPROMPT': 'Womit kann ich dir helfen?',
-            'STOP_MESSAGE': 'Gerne, um dir zu helfen. Auf Wiedersehen!'
+            'HELLO_MESSAGE': '<s>Willkommen beim Politikassistenten.</s>',
+            'HELP_MESSAGE': '<s>Sie können eine Frage stellen, was ist mein Anspruchsstatus.</s>',
+            'HELP_REPROMPT': '<s>Womit kann ich dir helfen?</s>',
+            'STOP_MESSAGE': '<s>Gerne, um dir zu helfen. Auf Wiedersehen!</s>'
         }
     }
 };
