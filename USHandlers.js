@@ -1,5 +1,8 @@
 const helper = require('./helper');
 
+var claimId;
+var claimStatusIntentInvoked = false;
+
 module.exports = {
     'LaunchRequest': function () {
         this.emit(':ask', this.t('HELLO_MESSAGE'), this.t('HELP_MESSAGE'));
@@ -19,28 +22,48 @@ module.exports = {
         this.response.speak(this.t('STOP_MESSAGE'));
         this.emit(':responseReady');
     },
-    "GetClaimStatusIntent": function () {
+    "claimStatusIntent": function () {
         var speechOutput;
-        var claimId;
+        claimStatusIntentInvoked = true;
         if (this.event.request.intent.slots.claimId.value) {
             claimId = this.event.request.intent.slots.claimId.value;
             console.log('claimId:' + claimId);
-            return helper.getClaimStatus(claimId).then((result) => {
-                speechOutput = result;
-                this.response.speak(speechOutput).shouldEndSession(false);
-                this.emit(':responseReady');
-            }).catch((err) => {
-                speechOutput = err;
-                this.response.speak(speechOutput).shouldEndSession(false);
-                this.emit(':responseReady');
-            });
+            if (claimId.length !== 11) {
+                console.log('INVALID_CLAIM_ID');
+                speechOutput = this.t('INVALID_CLAIM_ID');
+            } else {                
+                return helper.getClaimStatus(claimId).then((result) => {
+                    speechOutput = result;
+                }).catch((err) => {
+                    speechOutput = err;
+                });
+                console.log('API CALL SUCCESS: ' + speechOutput);
+            }
         } else {
-            speechOutput = "<s>Please provide the claim number.</s>";
-            this.response.speak(speechOutput).shouldEndSession(false);
-            this.emit(':responseReady');
+            console.log('CLAIM_ID_NEEDED');
+            speechOutput = this.t('CLAIM_ID_NEEDED');
+        }
+        this.response.speak(speechOutput).shouldEndSession(false);
+        this.emit(':responseReady');
+    },
+    "claimIdIntent": function () {
+        var speechOutput;
+        claimId = this.event.request.intent.slots.claimId.value;
+        if (claimId.length === 11) {
+            if (claimStatusIntentInvoked) {
+                return helper.getClaimStatus(claimId).then((result) => {
+                    speechOutput = result;
+                }).catch((err) => {
+                    speechOutput = err;
+                });
+                console.log('API CALL SUCCESS: ' + speechOutput);
+            }
+        } else {
+            console.log('INVALID_CLAIM_ID');
+            speechOutput = this.t('INVALID_CLAIM_ID');
         }
     },
-    "GetRepairPaymentStatusIntent": function () {
+    "repairPaymentIntent": function () {
         var speechOutput;
         var claimId;
         if (this.event.request.intent.slots.claimId.value) {
@@ -50,12 +73,9 @@ module.exports = {
                 speechOutput = res;
             });
         } else {
-            speechOutput = "Please provide the claim number.";
+            speechOutput = this.t('CLAIM_ID_NEEDED');
         }
         this.response.speak(speechOutput).shouldEndSession(false);
         this.emit(':responseReady');
-    },
-    "DUGetClaimStatusIntent": function () {
-        this.emit(':ask', this.t('HELLO_MESSAGE'));
     }
 };
