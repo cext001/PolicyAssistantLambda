@@ -11,6 +11,7 @@ var claimStatusIntentInvoked = false;
 var repairPaymentIntentInvoked = false;
 var repairPaymentDetailsIntentInvoked = false;
 var rentalCarIntentInvoked = false;
+var rentalDetailsIntentInvoked = false;
 var claimPaymentDetails = {};
 
 const APP_ID = "amzn1.ask.skill.ed110c90-9b28-4c38-9893-4abc77f702dd";
@@ -144,6 +145,7 @@ const handler = {
     },
     "rentalDetailsIntent": function () {
         var speechOutput;
+        rentalDetailsIntentInvoked = true;
         console.log(this.event.request.intent.slots);
         if (this.event.request.intent.slots.startDate.value && rentalStartDate == '') {
             rentalStartDate = request.data.request.intent.slots.startDate.value;
@@ -163,8 +165,20 @@ const handler = {
             })
         }
         if (rentalDays == '') {
-            speechOutput = "<s> Can you tell me for how many days you would require the rental car service?</s>";
+            speechOutput = "<s> Can you tell me for how many days you would require the rental car service?.</s>";
         }
+        this.response.speak(speechOutput).shouldEndSession(false);
+        this.emit(':responseReady');
+    },
+    "rentalConfirmIntent": function () {
+        var speechOutput = "<s> As per your policy, you are eligible for 30 days rental car service not exceeding $35 a day.";
+        speechOutput += ' Can you let me know the start date of the rental car service?.</s>';
+        this.response.speak(speechOutput).shouldEndSession(false);
+        this.emit(':responseReady');
+    },
+    "rentalCancelIntent": function () {
+        this.resetAll;
+        var speechOutput = "<s> Okay,But you can book a rental car later!</s>";
         this.response.speak(speechOutput).shouldEndSession(false);
         this.emit(':responseReady');
     },
@@ -183,6 +197,7 @@ const handler = {
         repairPaymentIntentInvoked = false;
         repairPaymentDetailsIntentInvoked = false;
         rentalCarIntentInvoked = false;
+        rentalDetailsIntentInvoked = false;
         claimPaymentDetails = {};
     }
 };
