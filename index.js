@@ -171,20 +171,28 @@ const handler = {
         this.emit(':responseReady');
     },
     "rentalConfirmIntent": function () {
-        var speechOutput = "<s> As per your policy, you are eligible for 30 days rental car service not exceeding $35 a day.";
-        speechOutput += ' Can you let me know the start date of the rental car service?.</s>';
-        this.response.speak(speechOutput).shouldEndSession(false);
-        this.emit(':responseReady');
+        if (rentalDetailsIntentInvoked) {
+            var speechOutput = "<s> As per your policy, you are eligible for 30 days rental car service not exceeding $35 a day.";
+            speechOutput += ' Can you let me know the start date of the rental car service?.</s>';
+            this.response.speak(speechOutput).shouldEndSession(false);
+            this.emit(':responseReady');
+        } else {
+            this.emit('AMAZON.HelpIntent');
+        }
     },
     "rentalCancelIntent": function () {
-        this.resetAll;
-        var speechOutput = "<s> Okay,But you can book a rental car later!</s>";
-        this.response.speak(speechOutput).shouldEndSession(false);
-        this.emit(':responseReady');
+        if (rentalDetailsIntentInvoked) {
+            this.resetAll;
+            var speechOutput = "<s> Okay,But you can book a rental car later!</s>";
+            this.response.speak(speechOutput).shouldEndSession(false);
+            this.emit(':responseReady');
+        } else {
+            this.emit('AMAZON.HelpIntent');
+        }
     },
     "thankIntent": function () {
         this.resetAll();
-        var speechOutput = "<s> Happy to help you!</s>";
+        var speechOutput = "<s> Happy to help you!.</s>";
         this.response.speak(speechOutput).shouldEndSession(true);
         this.emit(':responseReady');
     },
