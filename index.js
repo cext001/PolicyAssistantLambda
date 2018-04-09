@@ -20,7 +20,10 @@ const handler = {
     'LaunchRequest': function () {
         console.log("Locale: " + this.event.request.locale);
         locale = this.event.request.locale;
-        console.log(this.event.session);
+        console.log("Is new session: "+this.event.session.new);
+        if(this.event.session.new) {
+            this.resetAll;
+        }
         this.emit(':ask', this.t('HELLO_MESSAGE'), this.t('HELP_MESSAGE'));
     },
     'AMAZON.HelpIntent': function () {
