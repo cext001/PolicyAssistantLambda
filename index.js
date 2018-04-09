@@ -175,9 +175,10 @@ const handler = {
         this.emit(':responseReady');
     },
     "resetAll": function () {
-        claimId = '';
+        claimId = '';;
         rentalStartDate = '';
         rentalDays = '';
+        locale = '';
         claimStatusIntentInvoked = false;
         repairPaymentIntentInvoked = false;
         repairPaymentDetailsIntentInvoked = false;
