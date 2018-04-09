@@ -20,8 +20,8 @@ const handler = {
     'LaunchRequest': function () {
         console.log("Locale: " + this.event.request.locale);
         locale = this.event.request.locale;
-        console.log("Is new session: "+this.event.session.new);
-        if(this.event.session.new) {
+        console.log("Is new session: " + this.event.session.new);
+        if (this.event.session.new) {
             this.resetAll;
         }
         this.emit(':ask', this.t('HELLO_MESSAGE'), this.t('HELP_MESSAGE'));
@@ -175,14 +175,14 @@ const handler = {
         this.emit(':responseReady');
     },
     "resetAll": function () {
-        var claimId = '';;
-        var rentalStartDate = '';
-        var rentalDays = '';
-        var claimStatusIntentInvoked = false;
-        var repairPaymentIntentInvoked = false;
-        var repairPaymentDetailsIntentInvoked = false;
-        var rentalCarIntentInvoked = false;
-        var claimPaymentDetails = {};
+        claimId = '';
+        rentalStartDate = '';
+        rentalDays = '';
+        claimStatusIntentInvoked = false;
+        repairPaymentIntentInvoked = false;
+        repairPaymentDetailsIntentInvoked = false;
+        rentalCarIntentInvoked = false;
+        claimPaymentDetails = {};
     }
 };
 
