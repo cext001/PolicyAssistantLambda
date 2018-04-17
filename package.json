@@ -1,20 +1,15 @@
 {
-  "name": "myclaimassistant",
+  "name": "claimassistant",
   "version": "1.0.0",
-  "description": "",
+  "description": "An Alexa POC for Insurance Claim(Lambda function)",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [
-    "alexa",
-    "skill",
-    "fact"
-  ],
   "author": "Bimal Kumar H",
   "license": "ISC",
+  "alexa": {
+    "applicationId": "amzn1.ask.skill.ed110c90-9b28-4c38-9893-4abc77f702dd"
+  },
   "dependencies": {
-    "alexa-sdk": "^1.0.25",
-    "request": "^2.85.0"
+    "request": "^2.83.0",
+    "alexa-app": "^3.1.0"
   }
 }
